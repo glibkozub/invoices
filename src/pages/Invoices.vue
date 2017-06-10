@@ -13,10 +13,10 @@
         </thead>
         <tbody>
           <tr v-for="invoice, i in invoices">
-            <td>{{i + 1}}</td>
-            <td>{{invoice.createdAt}}</td>
-            <td>{{invoice.customer_id}}</td>
-            <td>{{invoice.total}}</td>
+            <td>{{ i + 1 }}</td>
+            <td>{{ invoice.createdAt }}</td>
+            <td>{{ getCustomer(customers, invoice.customer_id) }}</td>
+            <td>{{ invoice.total }}</td>
           </tr>
         </tbody>
       </table>
@@ -31,12 +31,23 @@
     name: 'invoices',
     data () {
       return {
-        'invoices': ''
+        'invoices': '',
+        'customers': ''
+      }
+    },
+    methods: {
+      getCustomer: (customers, invoiceId) => {
+        for (let customer of customers) {
+          if (customer.id === invoiceId) {
+            return customer.name
+          }
+        }
       }
     },
     created () {
       const vm = this
       getData('/api/invoices', vm, 'invoices')
+      getData('/api/customers', vm, 'customers')
     }
   }
 </script>

@@ -1,31 +1,44 @@
 <template>
   <div class="content">
-    <h1>List of customers</h1>
-    <p v-for="customer in customers">{{ customer }}</p>
+    <div class="container">
+      <h1>List of invoices</h1>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="customer, i in customers">
+          <td>{{i + 1}}</td>
+          <td>{{customer.id}}</td>
+          <td>{{customer.name}}</td>
+          <td>{{customer.address}}</td>
+          <td>{{customer.phone}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
+  import getData from '../helpers/get-data'
+
   export default {
     name: 'customers',
     data () {
       return {
-        customers: ['Pete', 'Simon', 'Igor', 'Severyn']
-      }
-    },
-    methods: {
-      test: () => {
-        console.log(this)
+        'customers': ''
       }
     },
     created () {
-      fetch('/api', {
-        'method': 'get'
-      }).then(response => {
-        console.log(response)
-      }).catch(err => {
-        console.log(err)
-      })
+      const vm = this
+      getData('/api/customers', vm, 'customers')
     }
   }
 </script>

@@ -17,7 +17,9 @@ module.exports = {
   ],
   // add your custom rules here
   'rules': {
-    'no-trailing-space': 0,
+    'no-trailing-spaces': 0,
+    'no-return-assign': 0,
+    'no-sequences': 0,
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
