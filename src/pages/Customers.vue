@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="container">
-      <h1>List of invoices</h1>
+      <h1>List of customers</h1>
       <table class="table table-hover">
         <thead>
         <tr>
