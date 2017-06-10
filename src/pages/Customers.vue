@@ -10,8 +10,22 @@
     name: 'customers',
     data () {
       return {
-        customers: ['Pete', 'Simon', 'Igor']
+        customers: ['Pete', 'Simon', 'Igor', 'Severyn']
       }
+    },
+    methods: {
+      test: () => {
+        console.log(this)
+      }
+    },
+    created () {
+      fetch('/api', {
+        'method': 'get'
+      }).then(response => {
+        console.log(response)
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 </script>
