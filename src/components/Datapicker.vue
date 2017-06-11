@@ -5,7 +5,7 @@
     </select>
 
     <div class="dropdown">
-      <input type="text" placeholder="Start typing user name..." class="form-control" :class="isOpen ? 'open' : ''" @input="typing(customers, typed); open()" v-model="typed" v-if="!selected">
+      <input type="text" placeholder="Start typing user name..." class="form-control" :class="isOpen ? 'open' : ''" @focus="open()" @blur="close()" @input="typing(customers, typed)" v-model="typed" v-if="!selected">
       <div type="text" class="selected" v-if="selected" @click="selected = ''">
         <span class="cansel">&times;</span>
         {{ selected }}
@@ -13,7 +13,7 @@
       <div class="dropdown-content">
         <div v-if="!filtered.length > 0">There is no matching user in the database</div>
         <div v-if="filtered" class="item">
-          <div v-for="customer in filtered" @click="select($event)">{{customer.name}}</div>
+          <div v-for="customer in filtered" @mousedown="select($event)">{{customer.name}}</div>
         </div>
       </div>
     </div>
@@ -48,10 +48,6 @@
       typing: function (customers, typed) {
         const vm = this
         vm.filtered = customers.filter(customer => customer.name.toLowerCase().includes(typed))
-
-        if (typed === '') {
-          vm.filtered = []
-        }
       },
       select (event) {
         this.selected = event.target.childNodes[0].textContent
@@ -60,6 +56,7 @@
     created () {
       const vm = this
       getData('/api/customers', vm, 'customers')
+      vm.filtered = vm.customers
     }
   }
 </script>
