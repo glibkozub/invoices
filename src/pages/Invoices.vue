@@ -1,7 +1,10 @@
 <template>
   <div class="content">
     <div class="container">
-      <h1>List of invoices</h1>
+      <div class="d-flex justify-content-between align-items-center">
+        <h1>List of invoices</h1>
+        <router-link to="/invoices/new" class="btn btn-primary">Create invoice</router-link>
+      </div>
       <table class="table table-hover">
         <thead>
           <tr>
