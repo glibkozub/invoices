@@ -9,7 +9,8 @@ const getData = (url, vm, dataName) => {
   fetch(url, {
     'method': 'get'
   }).then(response => response.json()).then(data => {
-    vm[dataName] = data
+    vm.data[dataName] = data
+    console.log(vm.data, vm.data[dataName])
   }).catch(err => {
     console.log(err)
   })

@@ -49,8 +49,10 @@
       }
     },
     created () {
-      const vm = this
-      vm.filtered = vm.data
+      this.filtered = this.data
+    },
+    updated () {
+      this.filtered = this.data
     }
   }
 </script>

@@ -1,16 +1,38 @@
 <template>
   <div id="app">
     <navbar></navbar>
-    <router-view></router-view>
+    <router-view :data="data"></router-view>
   </div>
 </template>
 
 <script>
   import Navbar from './components/Navbar'
+  import getData from './helpers/get-data'
 
   export default {
     name: 'app',
-    components: { Navbar }
+    components: { Navbar },
+    data () {
+      return {
+        'data': {
+          'customers': [{
+            'name': 'Bob Smith'
+          }, {
+            'name': 'Bob Dilan'
+          }],
+          'products': [{
+            'name': 'Parachute pants'
+          }, {
+            'name': 'Potato'
+          }]
+        }
+      }
+    },
+    created () {
+      const vm = this
+      getData('/api/customers', vm, 'customers')
+      getData('/api/products', vm, 'products')
+    }
   }
 </script>
 
