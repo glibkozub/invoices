@@ -35,23 +35,19 @@
     methods: {
       open: function () {
         this.isOpen = true
+        this.filtered = this.data
       },
       close: function () {
         this.isOpen = false
       },
       typing: function (data, typed) {
-        console.log(data)
-        const vm = this
-        vm.filtered = data.filter(item => item.name.toLowerCase().includes(typed))
+        this.filtered = data.filter(item => item.name.toLowerCase().includes(typed))
       },
       select (event) {
         this.selected = event.target.childNodes[0].textContent
       }
     },
     created () {
-      this.filtered = this.data
-    },
-    updated () {
       this.filtered = this.data
     }
   }
