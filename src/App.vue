@@ -31,4 +31,8 @@
   .content {
     padding: 20px 0;
   }
+
+  h1 {
+    margin-bottom: 2rem!important;
+  }
 </style>
