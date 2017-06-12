@@ -6,14 +6,13 @@
           {{ selectedItem }}
         </div>
       </div>
-      <input type="text" :placeholder="placeholder" class="form-control" @focus="open()" @blur="close()" @input="typing(data, typed)" v-model="typed" v-if="canSelect()">
-      <div class="dropdown-content">
+      <input type="text" :placeholder="placeholder" class="form-control col-4" @focus="open()" @blur="close()" @input="typing(data, typed)" v-model="typed" v-if="canSelect()">
+      <div class="dropdown-content col-4">
         <div v-if="!filtered.length > 0">There is no matching user in the database</div>
         <div v-if="filtered" class="item">
           <div v-for="data in filtered" @mousedown="onSelect($event)">{{data.name}}</div>
         </div>
       </div>
-      <div>{{selected}}</div>
     </div>
 </template>
 
@@ -26,7 +25,8 @@
         isOpen: false,
         typed: '',
         filtered: '',
-        selected: []
+        selected: [],
+        price: 0
       }
     },
     methods: {
@@ -40,6 +40,9 @@
       typing: function (data, typed) {
         this.filtered = data.filter(item => item.name.toLowerCase().includes(typed))
       },
+      price () {
+
+      },
       onSelect (event) {
         this.selected.push(event.target.childNodes[0].textContent)
 
@@ -49,7 +52,8 @@
         })
       },
       onDeselect (event) {
-        this.selected.splice(this.selected.indexOf(event.target.childNodes[0].textContent), 1)
+        const deselected = event.target.nextSibling.textContent.trim()
+        this.selected.splice(this.selected.indexOf(deselected), 1)
       },
       canSelect () {
         if (!this.multiple) {
@@ -108,6 +112,7 @@
   .selected {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
   }
 
   .cancel {

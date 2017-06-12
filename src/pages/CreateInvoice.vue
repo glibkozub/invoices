@@ -5,20 +5,20 @@
       <form>
         <div class="form-group row align-items-center">
           <div class="col-2 col-form-label">User</div>
-          <div class="col-4">
+          <div class="col-10">
             <datapicker :data="data.customers" :multiple="false" placeholder="Start typing user name.." selects="customer" @selected="onSelected"></datapicker>
           </div>
         </div>
         <div class="form-group row align-items-center">
           <div class="col-2 col-form-label">Products</div>
-          <div class="col-4">
+          <div class="col-10">
             <datapicker :data="data.products" :multiple="true" placeholder="Start typing product.." selects="products" @selected="onSelected"></datapicker>
           </div>
         </div>
         <div class="form-group row align-items-center">
           <div class="col-2">Discount</div>
-          <div class="col-4">
-            <input type="text" class="form-control">
+          <div class="col-10">
+            <input type="text" class="form-control col-4">
           </div>
         </div>
         <div class="form-group row align-items-center">
@@ -78,7 +78,7 @@
         // Find customer id from selected customer
         if (val.customer) {
           for (let customer of vm.data.customers) {
-            if (customer.name === val.customer) {
+            if (customer.name === val.customer[0]) {
               vm.customer_id = customer.id
             }
           }
