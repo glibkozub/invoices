@@ -3,8 +3,10 @@
       <div type="text" class="selected" v-if="canEdit()">
         <div v-for="selectedItem in selected" class="selected-item">
           <span class="cancel" @click="onDeselect($event)">&times;</span>
-          <span class="selected-name">{{ selectedItem }}</span>
-          <input type="number" min="1" class="form-control" style="width: 60px">
+          {{ selectedItem.name }}
+          <div v-if="selects=='products'">
+            <input type="number" min="1" value="1" class="form-control" style="width: 60px" @input="onChangeQuantity($event)">
+          </div>
         </div>
       </div>
       <input type="text" :placeholder="placeholder" class="form-control col-4" @focus="open()" @blur="close()" @input="typing(data, typed)" v-model="typed" v-if="canSelect()">
@@ -48,13 +50,37 @@
         })
       },
       onSelect (event) {
-        this.selected.push(event.target.childNodes[0].textContent)
+        this.selected.push({
+          name: event.target.childNodes[0].textContent,
+          quantity: 1
+        })
 
         this.emit()
       },
       onDeselect (event) {
         const deselected = event.target.nextSibling.textContent.trim()
-        this.selected.splice(this.selected.indexOf(deselected), 1)
+        const vm = this
+
+        // Remove clicked
+        vm.selected.forEach((selected, i) => {
+          if (selected.name === deselected) {
+            vm.selected.splice(i, 1)
+          }
+        })
+
+        this.emit()
+      },
+      onChangeQuantity (event) {
+        const vm = this
+        const current = event.target
+        const edited = current.parentNode.previousSibling.textContent.trim()
+
+        // Update quantity
+        vm.selected.forEach(selected => {
+          if (selected.name === edited) {
+            selected.quantity = current.value
+          }
+        })
 
         this.emit()
       },
@@ -124,6 +150,7 @@
     justify-content: center;
     width: 16px;
     height: 16px;
+    margin-right: 6px;
     border-radius: 50%;
     cursor: pointer;
     background-color: lightcoral;
@@ -134,14 +161,14 @@
     opacity: 0.8;
   }
 
-  .selected-name {
-    margin: 0 6px;
-  }
-
   .selected-item {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+  }
+
+  .selected-item .form-control {
+    margin-left: 6px;
   }
 
   .selected-item + .selected-item {

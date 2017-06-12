@@ -76,7 +76,7 @@
         // Find customer id from selected customer
         if (val.customer) {
           for (let customer of vm.data.customers) {
-            if (customer.name === val.customer[0]) {
+            if (customer.name === val.customer[0].name) {
               vm.customer_id = customer.id
             }
           }
@@ -86,10 +86,10 @@
           let newTotal = 0
 
           // Find total
-          val.products.forEach(productName => {
+          val.products.forEach(selectedProduct => {
             for (let product of vm.data.products) {
-              if (product.name === productName) {
-                newTotal += product.price
+              if (product.name === selectedProduct.name) {
+                newTotal += product.price * selectedProduct.quantity
               }
             }
           })
