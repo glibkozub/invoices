@@ -31,6 +31,12 @@
             <button type="button" class="btn btn-primary" @click="saveInvoice()">Save invoice</button>
           </div>
         </div>
+        <div class="form-group row align-items-center">
+          <div class="col-2"></div>
+          <div class="col-4 alert-info" v-if="notification">
+            Your invoice is saved. Check 'Invoices' page
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -49,7 +55,8 @@
         customer_id: '',
         discount: 0,
         total: 0,
-        totalWithDiscount: 0
+        totalWithDiscount: 0,
+        notification: false
       }
     },
     methods: {
@@ -70,11 +77,21 @@
         }).then(response => response.json()).then((data) => {
           getData('/api/invoices', vm, 'invoices')
         })
+
+        this.showSaveNotification()
+      },
+      showSaveNotification () {
+        this.notification = true
+      },
+      hideSaveNotification () {
+        this.notification = false
       },
       finalPrice () {
         this.totalWithDiscount = Math.round((this.total - this.discount) * 100) / 100
       },
       onSelected (val) {
+        this.hideSaveNotification()
+
         const vm = this
 
         // Find customer id from selected customer
