@@ -3,7 +3,8 @@
       <div type="text" class="selected" v-if="canEdit()">
         <div v-for="selectedItem in selected" class="selected-item">
           <span class="cancel" @click="onDeselect($event)">&times;</span>
-          {{ selectedItem }}
+          <span class="selected-name">{{ selectedItem }}</span>
+          <input type="number" min="1" class="form-control" style="width: 60px">
         </div>
       </div>
       <input type="text" :placeholder="placeholder" class="form-control col-4" @focus="open()" @blur="close()" @input="typing(data, typed)" v-model="typed" v-if="canSelect()">
@@ -40,20 +41,22 @@
       typing: function (data, typed) {
         this.filtered = data.filter(item => item.name.toLowerCase().includes(typed))
       },
-      price () {
-
-      },
-      onSelect (event) {
-        this.selected.push(event.target.childNodes[0].textContent)
-
+      emit () {
         // Emit data to parent
         this.$emit('selected', {
           [this.selects]: this.selected
         })
       },
+      onSelect (event) {
+        this.selected.push(event.target.childNodes[0].textContent)
+
+        this.emit()
+      },
       onDeselect (event) {
         const deselected = event.target.nextSibling.textContent.trim()
         this.selected.splice(this.selected.indexOf(deselected), 1)
+
+        this.emit()
       },
       canSelect () {
         if (!this.multiple) {
@@ -121,7 +124,6 @@
     justify-content: center;
     width: 16px;
     height: 16px;
-    margin-right: 6px;
     border-radius: 50%;
     cursor: pointer;
     background-color: lightcoral;
@@ -130,6 +132,10 @@
 
   .cancel:hover {
     opacity: 0.8;
+  }
+
+  .selected-name {
+    margin: 0 6px;
   }
 
   .selected-item {

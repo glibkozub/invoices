@@ -23,9 +23,7 @@
         </div>
         <div class="form-group row align-items-center">
           <div class="col-2">Total</div>
-          <div class="col-4">
-
-          </div>
+          <div class="col-4">{{this.total}}</div>
         </div>
         <div class="form-group row align-items-center">
           <div class="col-2"></div>
@@ -50,7 +48,7 @@
       return {
         customer_id: '',
         discount: '',
-        total: ''
+        total: 0
       }
     },
     methods: {
@@ -82,6 +80,21 @@
               vm.customer_id = customer.id
             }
           }
+        }
+
+        if (val.products) {
+          let newTotal = 0
+
+          // Find total
+          val.products.forEach(productName => {
+            for (let product of vm.data.products) {
+              if (product.name === productName) {
+                newTotal += product.price
+              }
+            }
+          })
+
+          this.total = newTotal
         }
       }
     }
