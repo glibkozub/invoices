@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="customer, i in customers">
+        <tr v-for="customer, i in data.customers">
           <td>{{i + 1}}</td>
           <td>{{customer.id}}</td>
           <td>{{customer.name}}</td>
@@ -27,18 +27,13 @@
 </template>
 
 <script>
-  import getData from '../helpers/get-data'
-
   export default {
     name: 'customers',
+    props: ['data'],
     data () {
       return {
         'customers': ''
       }
-    },
-    created () {
-      const vm = this
-      getData('/api/customers', vm, 'customers')
     }
   }
 </script>

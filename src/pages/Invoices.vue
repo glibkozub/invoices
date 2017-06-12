@@ -15,10 +15,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="invoice, i in invoices">
+          <tr v-for="invoice, i in data.invoices">
             <td>{{ i + 1 }}</td>
             <td>{{ invoice.createdAt }}</td>
-            <td>{{ getCustomer(customers, invoice.customer_id) }}</td>
+            <td>{{ getCustomer(data.customers, invoice.customer_id) }}</td>
             <td>{{ invoice.total }}</td>
           </tr>
         </tbody>
@@ -28,16 +28,10 @@
 </template>
 
 <script>
-  import getData from '../helpers/get-data'
 
   export default {
     name: 'invoices',
-    data () {
-      return {
-        'invoices': '',
-        'customers': ''
-      }
-    },
+    props: ['data'],
     methods: {
       getCustomer: (customers, invoiceId) => {
         for (let customer of customers) {
@@ -45,12 +39,23 @@
             return customer.name
           }
         }
+      },
+      foo: (val, oldVal) => {
+        const vm = this
+        console.log(vm.data)
+        console.log(val, oldVal)
+      }
+    },
+    watch: {
+      'data': {
+        handler: function (val, oldVal) {
+          this.foo(val, oldVal)
+        },
+        deep: true
       }
     },
     created () {
-      const vm = this
-      getData('/api/invoices', vm, 'invoices')
-      getData('/api/customers', vm, 'customers')
+      console.log(this.data)
     }
   }
 </script>

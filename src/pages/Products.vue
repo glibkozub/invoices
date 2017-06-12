@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="product, i in products">
+        <tr v-for="product, i in data.products">
           <td>{{i + 1}}</td>
           <td>{{product.id}}</td>
           <td>{{product.name}}</td>
@@ -25,18 +25,13 @@
 </template>
 
 <script>
-  import getData from '../helpers/get-data'
-
   export default {
     name: 'products',
+    props: ['data'],
     data () {
       return {
         'products': ''
       }
-    },
-    created () {
-      const vm = this
-      getData('/api/products', vm, 'products')
     }
   }
 </script>

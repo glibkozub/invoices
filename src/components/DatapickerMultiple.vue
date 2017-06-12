@@ -1,4 +1,9 @@
 <template>
+  <div>
+    <select>
+      <option value="">Test</option>
+    </select>
+
     <div class="dropdown">
       <input type="text" v-bind:placeholder="placeholder" class="form-control" :class="isOpen ? 'open' : ''" @focus="open()" @blur="close()" @input="typing(data, typed)" v-model="typed" v-if="!selected">
       <div type="text" class="selected" v-if="selected" @click="selected = ''">
@@ -12,12 +17,13 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
   export default {
     name: 'datapicker',
-    props: ['data', 'selects', 'placeholder'],
+    props: ['data', 'placeholder'],
     data () {
       return {
         isOpen: false,
@@ -39,10 +45,6 @@
       },
       select (event) {
         this.selected = event.target.childNodes[0].textContent
-
-        this.$emit('selected', {
-          [this.selects]: this.selected
-        })
       }
     },
     created () {

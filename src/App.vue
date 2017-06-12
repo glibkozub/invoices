@@ -32,6 +32,10 @@
       const vm = this
       getData('/api/customers', vm, 'customers')
       getData('/api/products', vm, 'products')
+      getData('/api/invoices', vm, 'invoices')
+    },
+    updated () {
+      console.log('app updated')
     }
   }
 </script>
