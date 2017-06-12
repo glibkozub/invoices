@@ -12,6 +12,7 @@
             <th>Date</th>
             <th>Customer</th>
             <th>Sum</th>
+            <th>Discount</th>
           </tr>
         </thead>
         <tbody>
@@ -20,6 +21,7 @@
             <td>{{ invoice.createdAt }}</td>
             <td>{{ getCustomer(data.customers, invoice.customer_id) }}</td>
             <td>{{ invoice.total }}</td>
+            <td>{{ invoice.discount }}</td>
           </tr>
         </tbody>
       </table>
@@ -28,7 +30,6 @@
 </template>
 
 <script>
-
   export default {
     name: 'invoices',
     props: ['data'],
@@ -39,23 +40,11 @@
             return customer.name
           }
         }
-      },
-      foo: (val, oldVal) => {
-        const vm = this
-        console.log(vm.data)
-        console.log(val, oldVal)
       }
     },
-    watch: {
-      'data': {
-        handler: function (val, oldVal) {
-          this.foo(val, oldVal)
-        },
-        deep: true
-      }
-    },
-    created () {
-      console.log(this.data)
+    mounted () {
+//      this.$route.push({name: 'Invoices'})
+      console.log(this.$route.params)
     }
   }
 </script>

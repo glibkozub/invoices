@@ -18,12 +18,12 @@
         <div class="form-group row align-items-center">
           <div class="col-2">Discount</div>
           <div class="col-10">
-            <input type="text" class="form-control col-4">
+            <input type="text" class="form-control col-4" v-model="discount" @input="finalPrice()">
           </div>
         </div>
         <div class="form-group row align-items-center">
           <div class="col-2">Total</div>
-          <div class="col-4">{{this.total}}</div>
+          <div class="col-4">{{totalWithDiscount}}</div>
         </div>
         <div class="form-group row align-items-center">
           <div class="col-2"></div>
@@ -47,8 +47,9 @@
     data () {
       return {
         customer_id: '',
-        discount: '',
-        total: 0
+        discount: 0,
+        total: 0,
+        totalWithDiscount: 0
       }
     },
     methods: {
@@ -69,6 +70,9 @@
         }).then(response => response.json()).then((data) => {
           getData('/api/invoices', vm, 'invoices')
         })
+      },
+      finalPrice () {
+        this.totalWithDiscount = Math.round((this.total - this.discount) * 100) / 100
       },
       onSelected (val) {
         const vm = this
@@ -94,7 +98,8 @@
             }
           })
 
-          this.total = newTotal
+          this.total = Math.round(newTotal * 100) / 100
+          this.finalPrice()
         }
       }
     }

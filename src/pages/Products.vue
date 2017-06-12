@@ -6,7 +6,6 @@
         <thead>
         <tr>
           <th>#</th>
-          <th>Id</th>
           <th>Name</th>
           <th>Price</th>
         </tr>
@@ -14,7 +13,6 @@
         <tbody>
         <tr v-for="product, i in data.products">
           <td>{{i + 1}}</td>
-          <td>{{product.id}}</td>
           <td>{{product.name}}</td>
           <td>{{product.price}}</td>
         </tr>

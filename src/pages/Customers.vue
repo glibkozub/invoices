@@ -6,7 +6,6 @@
         <thead>
         <tr>
           <th>#</th>
-          <th>Id</th>
           <th>Name</th>
           <th>Address</th>
           <th>Phone</th>
@@ -15,7 +14,6 @@
         <tbody>
         <tr v-for="customer, i in data.customers">
           <td>{{i + 1}}</td>
-          <td>{{customer.id}}</td>
           <td>{{customer.name}}</td>
           <td>{{customer.address}}</td>
           <td>{{customer.phone}}</td>
